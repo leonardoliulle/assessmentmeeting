@@ -25,8 +25,8 @@ $finder = Finder::create()
     ])
     ->notPath([
         'ci3sample/',
-        'libraries/sessions/017.php',
-        'database/query_builder/074.php',
+        'libraries/sessions/016.php',
+        'database/query_builder/075.php',
     ]);
 
 $overrides = [
@@ -37,7 +37,7 @@ $overrides = [
 ];
 
 $options = [
-    'cacheFile'    => 'build/.user-guide.php-cs-fixer.cache',
+    'cacheFile'    => 'build/.php-cs-fixer.user-guide.cache',
     'finder'       => $finder,
     'customFixers' => FixerGenerator::create('vendor/nexusphp/cs-config/src/Fixer', 'Nexus\\CsConfig\\Fixer'),
     'customRules'  => [

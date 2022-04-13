@@ -88,8 +88,9 @@ The following functions are available:
     :returns: The current URL
     :rtype:    string|\\CodeIgniter\\HTTP\\URI
 
-    Returns the full URL (including segments) of the page being currently
-    viewed.
+    Returns the full URL (including segments) of the page being currently viewed.
+    However for security reasons, it is created based on the ``Config\App`` settings,
+    and not intended to match the browser URL.
 
     .. note:: Calling this function is the same as doing this:
 
@@ -105,10 +106,10 @@ The following functions are available:
 
     Returns the full URL (including segments) of the page the user was previously on.
 
-    Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
-    store previously visited pages in the session if it's available. This ensures that we always
-    use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
-    then a sanitized version of HTTP_REFERER will be used.
+    .. note:: Due to security issues of blindly trusting the HTTP_REFERER system variable, CodeIgniter will
+        store previously visited pages in the session if it's available. This ensures that we always
+        use a known and trusted source. If the session hasn't been loaded, or is otherwise unavailable,
+        then a sanitized version of HTTP_REFERER will be used.
 
 .. php:function:: uri_string([$relative = false])
 

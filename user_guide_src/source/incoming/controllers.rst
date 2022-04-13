@@ -41,7 +41,7 @@ You can define an array of helper files as a class property. Whenever the contro
 these helper files will be automatically loaded into memory so that you can use their methods anywhere
 inside the controller:
 
-.. literalinclude:: controllers/016.php
+.. literalinclude:: controllers/001.php
 
 .. _controllers-validating-data:
 
@@ -51,15 +51,17 @@ forceHTTPS
 A convenience method for forcing a method to be accessed via HTTPS is available within all
 controllers:
 
-.. literalinclude:: controllers/014.php
+.. literalinclude:: controllers/002.php
 
 By default, and in modern browsers that support the HTTP Strict Transport Security header, this
 call should force the browser to convert non-HTTPS calls to HTTPS calls for one year. You can
 modify this by passing the duration (in seconds) as the first parameter:
 
-.. literalinclude:: controllers/015.php
+.. literalinclude:: controllers/003.php
 
 .. note:: A number of :doc:`time-based constants </general/common_functions>` are always available for you to use, including ``YEAR``, ``MONTH``, and more.
+
+.. _controller-validate:
 
 Validating data
 ***************
@@ -75,12 +77,12 @@ if the items are not valid. Internally, this uses the controller's
 The :doc:`Validation Library docs </libraries/validation>` have details on
 rule and message array formats, as well as available rules:
 
-.. literalinclude:: controllers/017.php
+.. literalinclude:: controllers/004.php
 
 If you find it simpler to keep the rules in the configuration file, you can replace
 the ``$rules`` array with the name of the group as defined in ``Config\Validation.php``:
 
-.. literalinclude:: controllers/018.php
+.. literalinclude:: controllers/005.php
 
 .. note:: Validation can also be handled automatically in the model, but sometimes it's easier to do it in the controller. Where is up to you.
 
@@ -91,7 +93,7 @@ Sometimes you may want to check the controller method parameters or other custom
 In that case, you can use the ``$this->validateData()`` method.
 The method accepts an array of data to validate in the first parameter:
 
-.. literalinclude:: controllers/019.php
+.. literalinclude:: controllers/006.php
 
 Private methods
 ***************
@@ -101,7 +103,7 @@ To achieve this, simply declare the method as ``private`` or ``protected``.
 That will prevent it from being served by a URL request. For example,
 if you were to define a method like this for the ``Helloworld`` controller:
 
-.. literalinclude:: controllers/013.php
+.. literalinclude:: controllers/007.php
 
 then trying to access it using the following URL will not work::
 
@@ -114,10 +116,11 @@ Auto Routing
 
 This section describes the functionality of the auto-routing.
 It automatically routes an HTTP request, and executes the corresponding controller method
-without route definitions. The auto-routing is enabled by default.
+without route definitions. The auto-routing is disabled by default.
 
-.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature. See :ref:`use-defined-routes-only`.
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    the auto-routing feature. It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
 
 .. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
 
@@ -141,7 +144,7 @@ controllers. You can extend this class in any new controller.
 
 For security reasons be sure to declare any new utility methods as ``protected`` or ``private``:
 
-.. literalinclude:: controllers/001.php
+.. literalinclude:: controllers/008.php
 
 Then save the file to your **/app/Controllers/** directory.
 
@@ -159,15 +162,15 @@ If you did it right you should see::
 
 This is valid:
 
-.. literalinclude:: controllers/002.php
+.. literalinclude:: controllers/009.php
 
 This is **not** valid:
 
-.. literalinclude:: controllers/003.php
+.. literalinclude:: controllers/010.php
 
 This is **not** valid:
 
-.. literalinclude:: controllers/004.php
+.. literalinclude:: controllers/011.php
 
 Also, always make sure your controller extends the parent controller
 class so that it can inherit all its methods.
@@ -181,7 +184,7 @@ class so that it can inherit all its methods.
 
     Here is an example based on PSR-4 Autoloader:
 
-    .. literalinclude:: controllers/005.php
+    .. literalinclude:: controllers/012.php
 
 Methods
 =======
@@ -197,7 +200,7 @@ controller gets called.**
 
 Let's try it. Add a new method to your controller:
 
-.. literalinclude:: controllers/006.php
+.. literalinclude:: controllers/013.php
 
 Now load the following URL to see the comment method::
 
@@ -217,10 +220,10 @@ For example, let's say you have a URI like this::
 
 Your method will be passed URI segments 3 and 4 (``'sandals'`` and ``'123'``):
 
-.. literalinclude:: controllers/007.php
+.. literalinclude:: controllers/014.php
 
 .. important:: If you are using the :doc:`URI Routing <routing>`
-    feature, the segments passed to your method will be the re-routed
+    feature, the segments passed to your method will be the defined
     ones.
 
 Defining a Default Controller
@@ -233,13 +236,13 @@ with the ``Helloworld`` controller.
 To specify a default controller open your **app/Config/Routes.php**
 file and set this variable:
 
-.. literalinclude:: controllers/008.php
+.. literalinclude:: controllers/015.php
 
 Where ``Helloworld`` is the name of the controller class you want to be used.
 
 A few lines further down **Routes.php** in the "Route Definitions" section, comment out the line:
 
-.. literalinclude:: controllers/009.php
+.. literalinclude:: controllers/016.php
 
 If you now browse to your site without specifying any URI segments you'll
 see the "Hello World" message.
@@ -279,7 +282,7 @@ called if the URL contains *only* the sub-directory. Simply put a controller
 in there that matches the name of your default controller as specified in
 your **app/Config/Routes.php** file.
 
-CodeIgniter also permits you to remap your URIs using its :doc:`URI Routing <routing>` feature.
+CodeIgniter also permits you to map your URIs using its :doc:`URI Routing <routing>` feature.
 
 Remapping Method Calls
 **********************
@@ -288,7 +291,7 @@ As noted above, the second segment of the URI typically determines which
 method in the controller gets called. CodeIgniter permits you to override
 this behavior through the use of the ``_remap()`` method:
 
-.. literalinclude:: controllers/010.php
+.. literalinclude:: controllers/017.php
 
 .. important:: If your controller contains a method named ``_remap()``,
     it will **always** get called regardless of what your URI contains. It
@@ -298,14 +301,14 @@ this behavior through the use of the ``_remap()`` method:
 The overridden method call (typically the second segment of the URI) will
 be passed as a parameter to the ``_remap()`` method:
 
-.. literalinclude:: controllers/011.php
+.. literalinclude:: controllers/018.php
 
 Any extra segments after the method name are passed into ``_remap()``. These parameters can be passed to the method
 to emulate CodeIgniter's default behavior.
 
 Example:
 
-.. literalinclude:: controllers/012.php
+.. literalinclude:: controllers/019.php
 
 Extending the Controller
 ************************

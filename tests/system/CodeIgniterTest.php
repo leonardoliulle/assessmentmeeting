@@ -12,6 +12,7 @@
 namespace CodeIgniter;
 
 use CodeIgniter\Config\Services;
+use CodeIgniter\HTTP\Response;
 use CodeIgniter\Router\RouteCollection;
 use CodeIgniter\Test\CIUnitTestCase;
 use CodeIgniter\Test\Mock\MockCodeIgniter;
@@ -26,11 +27,7 @@ use Tests\Support\Filters\Customfilter;
  */
 final class CodeIgniterTest extends CIUnitTestCase
 {
-    /**
-     * @var CodeIgniter
-     */
-    protected $codeigniter;
-
+    protected CodeIgniter $codeigniter;
     protected $routes;
 
     protected function setUp(): void
@@ -50,6 +47,8 @@ final class CodeIgniterTest extends CIUnitTestCase
         if (count(ob_list_handlers()) > 1) {
             ob_end_clean();
         }
+
+        $this->resetServices();
     }
 
     public function testRunEmptyDefaultRoute()
@@ -218,7 +217,7 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $response = Services::response(null, false);
 
-        $this->assertInstanceOf('\CodeIgniter\HTTP\Response', $response);
+        $this->assertInstanceOf(Response::class, $response);
     }
 
     public function testRoutesIsEmpty()
@@ -472,6 +471,12 @@ final class CodeIgniterTest extends CIUnitTestCase
 
         $_POST['_method'] = 'PUT';
 
+        $routes = \Config\Services::routes();
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->resetRoutes();
+        $routes->post('/', 'Home::index');
+        $routes->put('/', 'Home::index');
+
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();
         ob_get_clean();
@@ -489,6 +494,12 @@ final class CodeIgniterTest extends CIUnitTestCase
         $_SERVER['REQUEST_METHOD']  = 'POST';
 
         $_POST['_method'] = 'GET';
+
+        $routes = \Config\Services::routes();
+        $routes->setDefaultNamespace('App\Controllers');
+        $routes->resetRoutes();
+        $routes->post('/', 'Home::index');
+        $routes->get('/', 'Home::index');
 
         ob_start();
         $this->codeigniter->useSafeOutput(true)->run();

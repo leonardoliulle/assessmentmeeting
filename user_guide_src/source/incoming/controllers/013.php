@@ -2,10 +2,15 @@
 
 namespace App\Controllers;
 
-class Products extends BaseController
+class Helloworld extends BaseController
 {
-    protected function utility()
+    public function index()
     {
-        // some code
+        return 'Hello World!';
+    }
+
+    public function comment()
+    {
+        return 'I am not flat!';
     }
 }

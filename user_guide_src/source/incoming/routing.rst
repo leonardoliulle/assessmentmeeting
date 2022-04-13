@@ -76,23 +76,23 @@ Examples
 
 Here are a few basic routing examples.
 
-A URL containing the word **journals** in the first segment will be remapped to the ``\App\Controllers\Blogs`` class,
+A URL containing the word **journals** in the first segment will be mapped to the ``\App\Controllers\Blogs`` class,
 and the default method, which is usually ``index()``:
 
 .. literalinclude:: routing/006.php
 
-A URL containing the segments **blog/joe** will be remapped to the ``\App\Controllers\Blogs`` class and the ``users`` method.
+A URL containing the segments **blog/joe** will be mapped to the ``\App\Controllers\Blogs`` class and the ``users()`` method.
 The ID will be set to ``34``:
 
 .. literalinclude:: routing/007.php
 
-A URL with **product** as the first segment, and anything in the second will be remapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookup`` method:
+A URL with **product** as the first segment, and anything in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookup()`` method:
 
 .. literalinclude:: routing/008.php
 
-A URL with **product** as the first segment, and a number in the second will be remapped to the ``\App\Controllers\Catalog`` class
-and the ``productLookupByID`` method passing in the match as a variable to the method:
+A URL with **product** as the first segment, and a number in the second will be mapped to the ``\App\Controllers\Catalog`` class
+and the ``productLookupByID()`` method passing in the match as a variable to the method:
 
 .. literalinclude:: routing/009.php
 
@@ -118,23 +118,23 @@ Array Callable Syntax
 
 Since v4.2.0, you can use array callable syntax to specify the controller:
 
-.. literalinclude:: routing/004_1.php
+.. literalinclude:: routing/013.php
    :lines: 2-
 
 Or using ``use`` keyword:
 
-.. literalinclude:: routing/004_2.php
+.. literalinclude:: routing/014.php
    :lines: 2-
 
 If there are placeholders, it will automatically set the parameters in the specified order:
 
-.. literalinclude:: routing/004_3.php
+.. literalinclude:: routing/015.php
    :lines: 2-
 
 But the auto-configured parameters may not be correct if you use regular expressions in routes.
 In such a case, you can specify the parameters manually:
 
-.. literalinclude:: routing/004_4.php
+.. literalinclude:: routing/016.php
    :lines: 2-
 
 Custom Placeholders
@@ -147,7 +147,7 @@ You add new placeholders with the ``addPlaceholder()`` method. The first paramet
 the placeholder. The second parameter is the Regular Expression pattern it should be replaced with.
 This must be called before you add the route:
 
-.. literalinclude:: routing/013.php
+.. literalinclude:: routing/017.php
 
 Regular Expressions
 ===================
@@ -158,7 +158,7 @@ is allowed, as are back-references.
 .. important:: Note: If you use back-references you must use the dollar syntax rather than the double backslash syntax.
     A typical RegEx route might look something like this:
 
-    .. literalinclude:: routing/014.php
+    .. literalinclude:: routing/018.php
 
 In the above example, a URI similar to **products/shirts/123** would instead call the ``show`` method
 of the ``Products`` controller class, with the original first and second segment passed as arguments to it.
@@ -169,7 +169,7 @@ represent the delimiter between multiple segments.
 For example, if a user accesses a password protected area of your web application and you wish to be able to
 redirect them back to the same page after they log in, you may find this example useful:
 
-.. literalinclude:: routing/015.php
+.. literalinclude:: routing/019.php
 
 For those of you who don't know regular expressions and want to learn more about them,
 `regular-expressions.info <https://www.regular-expressions.info/>`_ might be a good starting point.
@@ -183,7 +183,7 @@ You can use an anonymous function, or Closure, as the destination that a route m
 executed when the user visits that URI. This is handy for quickly executing small tasks, or even just showing
 a simple view:
 
-.. literalinclude:: routing/016.php
+.. literalinclude:: routing/020.php
 
 Mapping multiple routes
 =======================
@@ -192,7 +192,7 @@ While the ``add()`` method is simple to use, it is often handier to work with mu
 the ``map()`` method. Instead of calling the ``add()`` method for each route that you need to add, you can
 define an array of routes and then pass it as the first parameter to the ``map()`` method:
 
-.. literalinclude:: routing/017.php
+.. literalinclude:: routing/021.php
 
 Redirecting Routes
 ==================
@@ -203,7 +203,7 @@ second parameter is either the new URI to redirect to, or the name of a named ro
 the HTTP status code that should be sent along with the redirect. The default value is ``302`` which is a temporary
 redirect and is recommended in most cases:
 
-.. literalinclude:: routing/018.php
+.. literalinclude:: routing/022.php
 
 If a redirect route is matched during a page load, the user will be immediately redirected to the new page before a
 controller can be loaded.
@@ -215,26 +215,26 @@ You can group your routes under a common name with the ``group()`` method. The g
 appears prior to the routes defined inside of the group. This allows you to reduce the typing needed to build out an
 extensive set of routes that all share the opening string, like when building an admin area:
 
-.. literalinclude:: routing/019.php
+.. literalinclude:: routing/023.php
 
 This would prefix the **users** and **blog** URIs with **admin**, handling URLs like **admin/users** and **admin/blog**.
 
 If you need to assign options to a group, like a :ref:`assigning-namespace`, do it before the callback:
 
-.. literalinclude:: routing/020.php
+.. literalinclude:: routing/024.php
 
 This would handle a resource route to the ``App\API\v1\Users`` controller with the **api/users** URI.
 
 You can also use a specific :doc:`filter <filters>` for a group of routes. This will always
 run the filter before or after the controller. This is especially handy during authentication or api logging:
 
-.. literalinclude:: routing/021.php
+.. literalinclude:: routing/025.php
 
 The value for the filter must match one of the aliases defined within **app/Config/Filters.php**.
 
 It is possible to nest groups within groups for finer organization if you need it:
 
-.. literalinclude:: routing/022.php
+.. literalinclude:: routing/026.php
 
 This would handle the URL at **admin/users/list**.
 
@@ -245,7 +245,7 @@ config options like namespace, subdomain, etc. Without necessarily needing to ad
 an empty string in place of the prefix and the routes in the group will be routed as though the group never existed but with the
 given route config options:
 
-.. literalinclude:: routing/023.php
+.. literalinclude:: routing/027.php
 
 Environment Restrictions
 ========================
@@ -255,7 +255,7 @@ tools that only the developer can use on their local machines that are not reach
 This can be done with the ``environment()`` method. The first parameter is the name of the environment. Any
 routes defined within this closure are only accessible from the given environment:
 
-.. literalinclude:: routing/024.php
+.. literalinclude:: routing/028.php
 
 Reverse Routing
 ===============
@@ -269,7 +269,7 @@ function to get the current route that should be used. The first parameter is th
 separated by a double colon (``::``), much like you would use when writing the initial route itself. Any parameters that
 should be passed to the route are passed in next:
 
-.. literalinclude:: routing/025.php
+.. literalinclude:: routing/029.php
 
 Using Named Routes
 ==================
@@ -279,7 +279,7 @@ later, and even if the route definition changes, all of the links in your applic
 will still work without you having to make any changes. A route is named by passing in the ``as`` option
 with the name of the route:
 
-.. literalinclude:: routing/026.php
+.. literalinclude:: routing/030.php
 
 This has the added benefit of making the views more readable, too.
 
@@ -289,7 +289,7 @@ Routes with any HTTP verbs
 It is possible to define a route with any HTTP verbs.
 You can use the ``add()`` method:
 
-.. literalinclude:: routing/027.php
+.. literalinclude:: routing/031.php
 
 .. warning:: While the ``add()`` method seems to be convenient, it is recommended to always use the HTTP-verb-based
     routes, described above, as it is more secure. If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
@@ -310,9 +310,9 @@ You can create routes that work only from the command-line, and are inaccessible
 route methods will also be inaccessible from the CLI, but routes created by the ``add()`` method will still be
 available from the command line:
 
-.. literalinclude:: routing/028.php
+.. literalinclude:: routing/032.php
 
-.. warning:: If you don't disable auto-routing and place the command file in **app/Controllers**,
+.. warning:: If you enable auto-routing and place the command file in **app/Controllers**,
     anyone could access the command with the help of auto-routing via HTTP.
 
 Global Options
@@ -321,7 +321,7 @@ Global Options
 All of the methods for creating a route (add, get, post, :doc:`resource <restful>` etc) can take an array of options that
 can modify the generated routes, or further restrict them. The ``$options`` array is always the last parameter:
 
-.. literalinclude:: routing/029.php
+.. literalinclude:: routing/033.php
 
 .. _applying-filters:
 
@@ -347,17 +347,17 @@ See :doc:`Controller filters <filters>` for more information on setting up filte
 
 You specify an alias defined in **app/Config/Filters.php** for the filter value:
 
-.. literalinclude:: routing/030.php
+.. literalinclude:: routing/034.php
 
 You may also supply arguments to be passed to the alias filter's ``before()`` and ``after()`` methods:
 
-.. literalinclude:: routing/031.php
+.. literalinclude:: routing/035.php
 
 **Classname filter**
 
 You specify a filter classname for the filter value:
 
-.. literalinclude:: routing/032.php
+.. literalinclude:: routing/036.php
 
 **Multiple filters**
 
@@ -365,7 +365,7 @@ You specify a filter classname for the filter value:
 
 You specify an array for the filter value:
 
-.. literalinclude:: routing/033.php
+.. literalinclude:: routing/037.php
 
 .. _assigning-namespace:
 
@@ -376,7 +376,7 @@ While a default namespace will be prepended to the generated controllers (see be
 a different namespace to be used in any options array, with the ``namespace`` option. The value should be the
 namespace you want modified:
 
-.. literalinclude:: routing/034.php
+.. literalinclude:: routing/038.php
 
 The new namespace is only applied during that call for any methods that create a single route, like get, post, etc.
 For any methods that create multiple routes, the new namespace is attached to all routes generated by that function
@@ -388,7 +388,7 @@ Limit to Hostname
 You can restrict groups of routes to function only in certain domain or sub-domains of your application
 by passing the "hostname" option along with the desired domain to allow it on as part of the options array:
 
-.. literalinclude:: routing/035.php
+.. literalinclude:: routing/039.php
 
 This example would only allow the specified hosts to work if the domain exactly matched **accounts.example.com**.
 It would not work under the main site at **example.com**.
@@ -399,12 +399,12 @@ Limit to Subdomains
 When the ``subdomain`` option is present, the system will restrict the routes to only be available on that
 sub-domain. The route will only be matched if the subdomain is the one the application is being viewed through:
 
-.. literalinclude:: routing/036.php
+.. literalinclude:: routing/040.php
 
 You can restrict it to any subdomain by setting the value to an asterisk, (``*``). If you are viewing from a URL
 that does not have any subdomain present, this will not be matched:
 
-.. literalinclude:: routing/037.php
+.. literalinclude:: routing/041.php
 
 .. important:: The system is not perfect and should be tested for your specific domain before being used in production.
     Most domains should work fine but some edge case ones, especially with a period in the domain itself (not used
@@ -419,7 +419,7 @@ value being the number of segments to offset.
 This can be beneficial when developing API's with the first URI segment being the version number. It can also
 be used when the first parameter is a language string:
 
-.. literalinclude:: routing/038.php
+.. literalinclude:: routing/042.php
 
 .. _routing-priority:
 
@@ -432,11 +432,11 @@ You can solve this problem by lowering the priority of route processing using th
 accepts positive integers and zero. The higher the number specified in the ``priority``, the lower
 route priority in the processing queue:
 
-.. literalinclude:: routing/039.php
+.. literalinclude:: routing/043.php
 
 To disable this functionality, you must call the method with the parameter ``false``:
 
-.. literalinclude:: routing/040.php
+.. literalinclude:: routing/044.php
 
 .. note:: By default, all routes have a priority of 0.
     Negative integers will be cast to the absolute value.
@@ -458,37 +458,12 @@ specified by the route. By default, this value is ``App\Controllers``.
 If you set the value empty string (``''``), it leaves each route to specify the fully namespaced
 controller:
 
-.. literalinclude:: routing/041.php
+.. literalinclude:: routing/045.php
 
 If your controllers are not explicitly namespaced, there is no need to change this. If you namespace your controllers,
 then you can change this value to save typing:
 
-.. literalinclude:: routing/042.php
-
-Default Controller
-==================
-
-When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
-the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
-which matches the controller at **app/Controllers/Home.php**:
-
-.. literalinclude:: routing/043.php
-
-The default controller is also used when no matching route has been found, and the URI would point to a directory
-in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
-**app/Controllers/Admin/Home.php**, it would be used.
-
-Default Method
-==============
-
-This works similar to the default controller setting, but is used to determine the default method that is used
-when a controller is found that matches the URI, but no segment exists for the method. The default value is
-``index``.
-
-In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
-``Products::listAll()`` method would be executed:
-
-.. literalinclude:: routing/044.php
+.. literalinclude:: routing/046.php
 
 Translate URI Dashes
 ====================
@@ -497,18 +472,22 @@ This option enables you to automatically replace dashes (``-``) with underscores
 URI segments, thus saving you additional route entries if you need to do that. This is required because the
 dash isn't a valid class or method name character and would cause a fatal error if you try to use it:
 
-.. literalinclude:: routing/045.php
+.. literalinclude:: routing/049.php
 
 .. _use-defined-routes-only:
 
 Use Defined Routes Only
 =======================
 
+Since v4.2.0, the auto-routing is disabled by default.
+
 When no defined route is found that matches the URI, the system will attempt to match that URI against the
-controllers and methods as described in :ref:`auto-routing`. You can disable this automatic matching, and restrict routes
+controllers and methods when :ref:`auto-routing` is enabled.
+
+You can disable this automatic matching, and restrict routes
 to only those defined by you, by setting the ``setAutoRoute()`` option to false:
 
-.. literalinclude:: routing/046.php
+.. literalinclude:: routing/050.php
 
 .. warning:: If you use the :doc:`CSRF protection </libraries/security>`, it does not protect **GET**
     requests. If the URI is accessible by the GET method, the CSRF protection will not work.
@@ -520,7 +499,7 @@ When a page is not found that matches the current URI, the system will show a ge
 what happens by specifying an action to happen with the ``set404Override()`` method. The value can be either
 a valid class/method pair, just like you would show in any route, or a Closure:
 
-.. literalinclude:: routing/047.php
+.. literalinclude:: routing/051.php
 
 Route processing by priority
 ============================
@@ -529,7 +508,7 @@ Enables or disables processing of the routes queue by priority. Lowering the pri
 Disabled by default. This functionality affects all routes.
 For an example use of lowering the priority see :ref:`routing-priority`:
 
-.. literalinclude:: routing/048.php
+.. literalinclude:: routing/052.php
 
 .. _auto-routing:
 
@@ -539,6 +518,21 @@ Auto Routing
 It is recommended that all routes are defined in the **app/Config/Routes.php** file.
 However, CodeIgniter can also automatically route HTTP requests based on conventions
 and execute the corresponding controller methods.
+
+.. warning:: To prevent misconfiguration and miscoding, we recommend that you do not use
+    the auto-routing feature. It is easy to create vulnerable apps where controller filters
+    or CSRF protection are bypassed.
+
+.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+
+Enable Auto Routing
+===================
+
+Since v4.2.0, the auto-routing is disabled by default.
+
+To use it, you need to change the setting ``setAutoRoute()`` option to true in **app/Config/Routes.php**::
+
+    $routes->setAutoRoute(true);
 
 URI Segments
 ============
@@ -559,14 +553,41 @@ In the above example, CodeIgniter would attempt to find a controller named **Hel
 and executes ``index()`` method with passing ``'1'`` as the first argument.
 
 We call this "**Auto Routes**". CodeIgniter automatically routes an HTTP request,
-and executes the corresponding controller method. The auto-routing is enabled by default.
-
-.. note:: To prevent misconfiguration and miscoding, we recommend that you disable
-    the auto-routing feature. See :ref:`use-defined-routes-only`.
-
-.. important:: The auto-routing routes a HTTP request with **any** HTTP method to a controller method.
+and executes the corresponding controller method. The auto-routing is disabled by default.
 
 See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+
+Configuration Options
+=====================
+
+These options are available at the top of **app/Config/Routes.php**.
+
+Default Controller
+------------------
+
+When a user visits the root of your site (i.e., example.com) the controller to use is determined by the value set by
+the ``setDefaultController()`` method, unless a route exists for it explicitly. The default value for this is ``Home``
+which matches the controller at **app/Controllers/Home.php**:
+
+.. literalinclude:: routing/047.php
+
+The default controller is also used when no matching route has been found, and the URI would point to a directory
+in the controllers directory. For example, if the user visits **example.com/admin**, if a controller was found at
+**app/Controllers/Admin/Home.php**, it would be used.
+
+See :ref:`Auto Routing in Controllers <controller-auto-routing>` for more info.
+
+Default Method
+--------------
+
+This works similar to the default controller setting, but is used to determine the default method that is used
+when a controller is found that matches the URI, but no segment exists for the method. The default value is
+``index``.
+
+In this example, if the user were to visit **example.com/products**, and a ``Products`` controller existed, the
+``Products::listAll()`` method would be executed:
+
+.. literalinclude:: routing/048.php
 
 Confirming Routes
 *****************
