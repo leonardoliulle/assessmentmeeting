@@ -19,31 +19,33 @@ class AssessmentPeople extends Migration
 
                 'user_id'          => [
                     'type'           => 'INT',
-                    'constraint'     => 5,
-                    'unsigned'       => true,
+                    'constraint'     => 11,
+                    // 'unsigned'       => true,
                 ],
                 'assessment_id'          => [
                     'type'           => 'INT',
-                    'constraint'     => 5,
-                    'unsigned'       => true,
+                    'constraint'     => 11,
+                    // 'unsigned'       => true,
                 ],
                 'madecount'          => [
                     'type'           => 'INT',
                     'constraint'     => 5,
-                    'unsigned'       => true,
+                    // 'unsigned'       => true,
                 ],
 
             ]);
-            
+
             $this->forge->addKey('id', true);
-            $this->forge->addForeignKey('assessment_id', 'assessment', 'id');
-            $this->forge->addForeignKey('user_id', 'users', 'id');
+            // $this->forge->addForeignKey('assessment_id', 'assessment', 'id');
+            // $this->forge->addForeignKey('user_id', 'users', 'id');
             $this->forge->createTable('assessmentPeople');
     }
 
     public function down()
     {
         $this->forge->dropTable('AssessmentPeople');
+        // $this->forge->dropForeignKey('assessment', 'assessment_id');
+        // $this->forge->dropForeignKey('AssessmentPeople');
         
     }
 }

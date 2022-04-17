@@ -3,7 +3,6 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
-$forge = \Config\Database::forge();
 
 class AssessmentPeopleAtributes extends Migration
 {
@@ -50,15 +49,15 @@ class AssessmentPeopleAtributes extends Migration
             ]);
 
             $this->forge->addKey('id', true);
-            $this->forge->addForeignKey('assessment_id', 'assessment', 'id');
-            $this->forge->addForeignKey('user_id', 'users', 'id');
-            $this->forge->createTable('AssessmentPeopleAtributes');
+            // $this->forge->addForeignKey('assessment_id', 'assessment', 'id');
+            // $this->forge->addForeignKey('user_id', 'users', 'id');
+            $this->forge->createTable('assessmentPeopleAtributes');
     }
 
     public function down()
     {
         //
-        $this->forge->dropTable('AssessmentPeopleAtributes');
+        $this->forge->dropTable('assessmentPeopleAtributes');
         
     }
 }

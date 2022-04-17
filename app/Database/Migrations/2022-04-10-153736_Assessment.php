@@ -3,7 +3,7 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
-$forge = \Config\Database::forge();
+
 
 class Assessment extends Migration
 {
@@ -13,7 +13,7 @@ class Assessment extends Migration
             $this->forge->addField([
                 'id'          => [
                     'type'           => 'INT',
-                    'constraint'     => 5,
+                    'constraint'     => 11,
                     'unsigned'       => true,
                     'auto_increment' => true,
                 ],
@@ -22,7 +22,8 @@ class Assessment extends Migration
                     'constraint' => '100',
                 ],
                 'description'       => [
-                    'type'       => 'TEXT',
+                    'type'       => 'VARCHAR',
+                    'constraint' => '255'
                 ],
             ]);
             $this->forge->addKey('id', true);

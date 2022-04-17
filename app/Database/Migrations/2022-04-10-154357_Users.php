@@ -3,7 +3,6 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
-$forge = \Config\Database::forge();
 
 class Users extends Migration
 {
@@ -13,7 +12,7 @@ class Users extends Migration
             $this->forge->addField([
                 'id'          => [
                     'type'           => 'INT',
-                    'constraint'     => 5,
+                    'constraint'     => 11,
                     'unsigned'       => true,
                     'auto_increment' => true,
                 ],
