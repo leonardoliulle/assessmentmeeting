@@ -3,6 +3,7 @@
 namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
+$forge = \Config\Database::forge();
 
 class Users extends Migration
 {
@@ -17,6 +18,10 @@ class Users extends Migration
                     'auto_increment' => true,
                 ],
                 'name'       => [
+                    'type'       => 'VARCHAR',
+                    'constraint' => '100',
+                ],
+                'email'       => [
                     'type'       => 'VARCHAR',
                     'constraint' => '100',
                 ],
